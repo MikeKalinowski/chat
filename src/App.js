@@ -17,7 +17,7 @@ class App extends Component {
 		super(props)
 
 		this.state = {
-			route: "login"
+			route: "main"
 		}
 	}
 

@@ -1,20 +1,38 @@
 import React from 'react';
 import styled from 'styled-components'
+import CreateChannel from '../common/createChannel'
+import ChannelsList from '../common/channelsList'
 
 const MainWrapper = styled.div`
+	padding: 30px 100px 
 `
+
+const ChannelsWrapper = styled.div`
+	height: 300px;
+	width: 800px;
+	border: 1px solid black;
+`
+
 
 class Main extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			newChannelClicked: false,
+			newChannelName: "",
 	    }
+	}
+
+	newChannelClick = () => {
+		this.setState({ newChannelClicked: !this.state.newChannelClicked })
 	}
 
 	render() {
 	  	return(
 	  		<MainWrapper>
-	  			This is MAIN
+	  			<ChannelsWrapper><ChannelsList /></ChannelsWrapper>
+	  			<button onClick={this.newChannelClick}>New channel</button>
+	  			{this.state.newChannelClicked && <CreateChannel newChannelClick={this.newChannelClick}/>}
 	  		</MainWrapper>
 	  	)
 	}	

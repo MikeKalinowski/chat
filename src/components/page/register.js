@@ -42,7 +42,7 @@ class Register extends React.Component {
 
 	onRegister = () => {
 		if (!this.state.name || !this.state.password) {
-			this.setState({ errorRegistering: "empty" })
+			this.setState({ errorRegistering: "Empty" })
 		} else {
 			fetch('http://localhost:8000/register', {
 				method: 'post',
@@ -71,7 +71,7 @@ class Register extends React.Component {
 			return (<div>User already exists</div>)
 		} else if (this.state.errorRegistering === "Error") {
 			return (<div>Error registering. Please try again later</div>)
-		} else if (this.state.errorRegistering === "empty") {
+		} else if (this.state.errorRegistering === "Empty") {
 			return (<div>Please enter name and password</div>)
 		}
 	}
