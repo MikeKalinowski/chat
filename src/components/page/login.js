@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components'
 
-const RegisterWrapper = styled.div`
+const LoginWrapper = styled.div`
 	text-align: center
-	padding-top: 10%;
 `
 
 const Title = styled.div`
@@ -20,15 +19,13 @@ const InputsWrapper = styled.div`
 	
 `
 
-
-
-class Register extends React.Component {
+class Login extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 		    name: "",
 		    password: "",
-		    errorRegistering: "no"
+		    errorLogging: ""
 	    }
 	}
 
@@ -40,11 +37,11 @@ class Register extends React.Component {
 	  	this.setState({password: event.target.value})
 	}
 
-	onRegister = () => {
+	onLogin = () => {
 		if (!this.state.name || !this.state.password) {
-			this.setState({ errorRegistering: "empty" })
+			this.setState({ errorLogging: "empty" })
 		} else {
-			fetch('http://localhost:8000/register', {
+			fetch('http://localhost:8000/login', {
 				method: 'post',
 				headers: {'Content-Type': 'application/json'},
 				body: JSON.stringify({
@@ -54,12 +51,12 @@ class Register extends React.Component {
 			})
 			.then(res => res.json())
 			.then(res => {
-				if (res === "User Added") {
+				if (res.name) {
 					this.props.routeChanger("main")
-				} else if (res === "Existing") {
-					this.setState({ errorRegistering: "Existing" })
+				} else if (res === "No User") {
+					this.setState({ errorLogging: "noUser" })
 				} else {
-					this.setState({ errorRegistering: "Error" })
+					this.setState({ errorLogging: "error" })
 				}
 			})
 		}
@@ -67,20 +64,20 @@ class Register extends React.Component {
 	}
 
 	errorMessage = () => {
-		if (this.state.errorRegistering === "Existing") {
-			return (<div>User already exists</div>)
-		} else if (this.state.errorRegistering === "Error") {
-			return (<div>Error registering. Please try again later</div>)
-		} else if (this.state.errorRegistering === "empty") {
+		if (this.state.errorLogging === "noUser") {
+			return (<div>Incorrect user or password</div>)
+		} else if (this.state.errorLogging === "error") {
+			return (<div>Error logging in. Please try again later</div>)
+		} else if (this.state.errorLogging === "empty") {
 			return (<div>Please enter name and password</div>)
 		}
 	}
 
 	render() {
 	  	return(
-	  		<RegisterWrapper>
+	  		<LoginWrapper>
 	  			<Title>Chatty Chat</Title>
-	  			<Text>YOU REGISTER HERE NOW. GOOD.</Text>
+	  			<Text>Welcome to Chatty Chat<br />Place where you chat to chat when you chat.</Text>
 	  			<InputsWrapper>
 	  				<fieldset>
 	  					{this.errorMessage()}
@@ -88,12 +85,14 @@ class Register extends React.Component {
 	  					Password: <input type="text" placeholder="Password" onChange={this.onPasswordChange}/><br />
 	  				</fieldset>
 	  			</InputsWrapper>
-	  			<button onClick={this.onRegister}>Register</button>
+	  			<button onClick={this.onLogin}>Log in</button>
+	  			<button onClick={() => this.props.routeChanger("register")}>Register</button>
 	  			<div>
+	  				{/* <button>Login as anonymous</button> */}
 	  			</div>
-	  		</RegisterWrapper>
+	  		</LoginWrapper>
 	  	)
 	}	
 }
 
-export default Register;
+export default Login;

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ThemeProvider } from 'styled-components';
 import styled from 'styled-components'
 
+import Login from './components/page/login.js';
 import Register from './components/page/register.js';
 import Main from './components/page/main.js';
 import { Theme } from './theme.js';
@@ -16,7 +17,7 @@ class App extends Component {
 		super(props)
 
 		this.state = {
-			route: "register"
+			route: "login"
 		}
 	}
 
@@ -26,6 +27,8 @@ class App extends Component {
 			return (<Register routeChanger={this.routeChanger}/>)
 		} else if (this.state.route === "main") {
 			return (<Main />)
+		} else if (this.state.route === "login") {
+			return (<Login routeChanger={this.routeChanger}/>)
 		}
 	}
 
