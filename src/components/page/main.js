@@ -11,6 +11,7 @@ const ChannelsWrapper = styled.div`
 	height: 300px;
 	width: 800px;
 	border: 1px solid black;
+	overflow: auto
 `
 
 
@@ -20,19 +21,24 @@ class Main extends React.Component {
 		this.state = {
 			newChannelClicked: false,
 			newChannelName: "",
+			refreshChannelState: 0
 	    }
 	}
 
 	newChannelClick = () => {
-		this.setState({ newChannelClicked: !this.state.newChannelClicked })
+		this.setState({ newChannelClicked: !this.state.newChannelClicked });
+	}
+
+	refreshChannelList = () => {
+		this.setState({ refreshChannelState: this.state.refreshChannelState+1 });
 	}
 
 	render() {
 	  	return(
 	  		<MainWrapper>
-	  			<ChannelsWrapper><ChannelsList /></ChannelsWrapper>
+	  			<ChannelsWrapper><ChannelsList refreshChannelState={this.state.refreshChannelState}/></ChannelsWrapper>
 	  			<button onClick={this.newChannelClick}>New channel</button>
-	  			{this.state.newChannelClicked && <CreateChannel newChannelClick={this.newChannelClick}/>}
+	  			{this.state.newChannelClicked && <CreateChannel newChannelClick={this.newChannelClick} refreshChannelList={this.refreshChannelList}/>}
 	  		</MainWrapper>
 	  	)
 	}	

@@ -9,7 +9,6 @@ class CreateChannel extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			newChannelClicked: false,
 			newChannelName: "",
 			errorCreating: "",
 	    }
@@ -33,7 +32,8 @@ class CreateChannel extends React.Component {
 			.then(res => res.json())
 			.then(res => {
 				if (res === "Channel Added") {
-					this.props.newChannelClick() // Hiding this component // TODO: Add some pretty transition
+					this.props.refreshChannelList()
+					this.props.newChannelClick(); // Hiding this component // TODO: Add some pretty transition
 				} else if (res === "Existing") {
 					this.setState({ errorCreating: "Existing" })
 				} else {
