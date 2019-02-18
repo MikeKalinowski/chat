@@ -23,6 +23,19 @@ class Channel extends React.Component {
 
 	componentDidMount() {
 		this.getMessages();
+		this.scrollToBottom();
+		// const eventSource = new EventSource('http://localhost:8000/messagesListSSE');
+		// eventSource.onmessage = (e) => {
+		// 	console.log(e.data)
+		// };
+	}
+
+	componentDidUpdate() {
+	  this.scrollToBottom();
+	}
+
+	scrollToBottom = () => { // Scrolls to the bottom of chat window (newest message)
+	  this.messagesEnd.scrollIntoView({ behavior: "smooth" });
 	}
 
 	getMessages() {
@@ -39,11 +52,28 @@ class Channel extends React.Component {
 
 	renderMessages = () => {
 		if (this.state.messages.length < 1) {
-			return (<div>Your message will be the first one</div>)
+			return (
+				<div>
+					<div>Your message will be the first one</div>
+					<div style={{ float:"left", clear: "both" }} // This is fake div to scroll to the bottom of chat window (scrollToBottom)
+					    ref={(el) => { this.messagesEnd = el; }}>
+					</div>
+				</div>
+			)
 		} else {
-			return (this.state.messages.map(message => (<div key={message.id}>{message.userId} {message.content}</div>)))
+			return (
+				<div>
+					{this.state.messages.map(message => (<div key={message.id}>{message.userId} {message.date} {message.content}</div>))}
+					<div style={{ float:"left", clear: "both" }} // This is fake div to scroll to the bottom of chat window (scrollToBottom)
+					    ref={(el) => { this.messagesEnd = el; }}>
+					</div>
+				</div>
+			)
 		}
 	}
+
+	// message.date.getDate() + "-" + message.date.getMonth() + 1 + "-" + message.date.getFullYear() TODODODO
+	// .toLocaleDateString("en-US")
 
 	onMessageChange = (event) => {
 		this.setState({ messageText: event.target.value })
@@ -69,6 +99,8 @@ class Channel extends React.Component {
 	    resetButton.value = "";
 	    this.setState({ messageText: "" });
 	}
+
+	
 
 	render() {
 		return(
