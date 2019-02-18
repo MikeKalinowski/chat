@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import Login from './components/page/login.js';
 import Register from './components/page/register.js';
 import Main from './components/page/main.js';
+import Channel from './components/page/channel.js'
 import { Theme } from './theme.js';
 import './fonts.css';
 
@@ -17,7 +18,8 @@ class App extends Component {
 		super(props)
 
 		this.state = {
-			route: "main"
+			route: "main",
+			channelId: 0
 		}
 	}
 
@@ -26,15 +28,18 @@ class App extends Component {
 		if (this.state.route === "register") {
 			return (<Register routeChanger={this.routeChanger}/>)
 		} else if (this.state.route === "main") {
-			return (<Main />)
+			return (<Main routeChanger={this.routeChanger}/>)
 		} else if (this.state.route === "login") {
 			return (<Login routeChanger={this.routeChanger}/>)
+		} else if (this.state.route === "channel") {
+			return (<Channel routeChanger={this.routeChanger} channelId={this.state.channelId}/>)
 		}
 	}
 
-	routeChanger = (newRoute) => {
+	routeChanger = (newRoute, channelId) => {
+		channelId && this.setState({channelId: channelId});
 		this.setState({route: newRoute});
-		console.log("routeChanger")
+		console.log("routeChanger");
 	}
 
   	render() {

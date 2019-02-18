@@ -36,7 +36,7 @@ class Main extends React.Component {
 	render() {
 	  	return(
 	  		<MainWrapper>
-	  			<ChannelsWrapper><ChannelsList refreshChannelState={this.state.refreshChannelState}/></ChannelsWrapper>
+	  			<ChannelsWrapper><ChannelsList refreshChannelState={this.state.refreshChannelState} routeChanger={this.props.routeChanger}/></ChannelsWrapper>
 	  			<button onClick={this.newChannelClick}>New channel</button>
 	  			{this.state.newChannelClicked && <CreateChannel newChannelClick={this.newChannelClick} refreshChannelList={this.refreshChannelList}/>}
 	  		</MainWrapper>

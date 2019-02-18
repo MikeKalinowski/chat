@@ -29,12 +29,12 @@ class ChannelsList extends React.Component {
 	}
 
 	renderChannels = () => {
-		return this.state.channels.map(channel => (<div key={channel.id}>{channel.name}</div>))
+		return this.state.channels.map(channel => (<div key={channel.id} onClick={() => this.props.routeChanger("channel", channel.id)}>{channel.name}</div>))
 	}
 
 	render() {
 		return(
-			<ChannelsListWrapper onClick={this.getChannels}>
+			<ChannelsListWrapper>
 				{this.renderChannels()}
 			</ChannelsListWrapper>
 			)
