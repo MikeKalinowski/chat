@@ -24,10 +24,10 @@ class Channel extends React.Component {
 	componentDidMount() {
 		this.getMessages();
 		this.scrollToBottom();
-		// const eventSource = new EventSource('http://localhost:8000/messagesListSSE');
-		// eventSource.onmessage = (e) => {
-		// 	console.log(e.data)
-		// };
+		const eventSource = new EventSource('http://localhost:8000/messagesListSSE');
+		eventSource.onmessage = (e) => {
+			console.log(JSON.parse(e.data))
+		};
 	}
 
 	componentDidUpdate() {
