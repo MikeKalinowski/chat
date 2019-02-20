@@ -18,24 +18,22 @@ class Channel extends React.Component {
 		this.state = {
 			messageText: "",
 			messages: []
-	    }
+	    };
+	    this.eventSource = ""
 	}
 
 	componentDidMount() {
 		this.getMessages();
 		this.scrollToBottom();
-		const eventSource = new EventSource('http://localhost:8000/messagesListSSE');
-		eventSource.onmessage = (e) => {
-			console.log(JSON.parse(e.data))
-		};
+		this.setMessagesSSE();
 	}
 
 	componentDidUpdate() {
-	  this.scrollToBottom();
+		this.scrollToBottom();
 	}
 
-	scrollToBottom = () => { // Scrolls to the bottom of chat window (newest message)
-	  this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+	componentWillUnmount() {
+		this.eventSource.close()
 	}
 
 	getMessages() {
@@ -50,13 +48,28 @@ class Channel extends React.Component {
 		.then(res => this.setState({messages: res}))
 	}
 
+	// Scrolls to the bottom of chat window (newest message)
+	scrollToBottom = () => { 
+	  this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+	}
+
+	//Server Sent Events listener that gets messages when sb writes new one
+	setMessagesSSE = () => { 
+		const urlWithChannelId = 'http://localhost:8000/messagesListSSE/' + this.props.channelId // Allows to send proper SSE messages from server
+		this.eventSource = new EventSource(urlWithChannelId);
+		this.eventSource.onmessage = (e) => {
+			console.log(JSON.parse(e.data));
+			this.setState({messages: JSON.parse(e.data)}) 
+		};
+	}
+
 	renderMessages = () => {
 		if (this.state.messages.length < 1) {
 			return (
 				<div>
 					<div>Your message will be the first one</div>
 					<div style={{ float:"left", clear: "both" }} // This is fake div to scroll to the bottom of chat window (scrollToBottom)
-					    ref={(el) => { this.messagesEnd = el; }}>
+					    ref={el => { this.messagesEnd = el; }}>
 					</div>
 				</div>
 			)
@@ -65,7 +78,7 @@ class Channel extends React.Component {
 				<div>
 					{this.state.messages.map(message => (<div key={message.id}>{message.userId} {message.date} {message.content}</div>))}
 					<div style={{ float:"left", clear: "both" }} // This is fake div to scroll to the bottom of chat window (scrollToBottom)
-					    ref={(el) => { this.messagesEnd = el; }}>
+					    ref={el => { this.messagesEnd = el; }}>
 					</div>
 				</div>
 			)
@@ -89,7 +102,6 @@ class Channel extends React.Component {
 			    channelId: this.props.channelId,
 			})
 		})
-		.then(res => res.json())
 		.then(() => this.getMessages())
 		.then(() => this.resetInput())
 	}
