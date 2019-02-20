@@ -58,7 +58,6 @@ class Channel extends React.Component {
 		const urlWithChannelId = 'http://localhost:8000/messagesListSSE/' + this.props.channelId // Allows to send proper SSE messages from server
 		this.eventSource = new EventSource(urlWithChannelId);
 		this.eventSource.onmessage = (e) => {
-			console.log(JSON.parse(e.data));
 			this.setState({messages: JSON.parse(e.data)}) 
 		};
 	}
