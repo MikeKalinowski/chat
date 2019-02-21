@@ -1,15 +1,10 @@
 import React from 'react';
 import styled from 'styled-components'
 
+import MessagesList from '../common/messagesList'
+
 const ChannelWrapper = styled.div`
 	padding: 30px 100px 
-`
-
-const MessagesWrapper = styled.div`
-	height: 300px;
-	width: 800px;
-	border: 1px solid black;
-	overflow: auto
 `
 
 class Channel extends React.Component {
@@ -24,12 +19,7 @@ class Channel extends React.Component {
 
 	componentDidMount() {
 		this.getMessages();
-		this.scrollToBottom();
 		this.setMessagesSSE();
-	}
-
-	componentDidUpdate() {
-		this.scrollToBottom();
 	}
 
 	componentWillUnmount() {
@@ -48,11 +38,6 @@ class Channel extends React.Component {
 		.then(res => this.setState({messages: res}))
 	}
 
-	// Scrolls to the bottom of chat window (newest message)
-	scrollToBottom = () => { 
-	  this.messagesEnd.scrollIntoView({ behavior: "smooth" });
-	}
-
 	//Server Sent Events listener that gets messages when sb writes new one
 	setMessagesSSE = () => { 
 		const urlWithChannelId = 'http://localhost:8000/messagesListSSE/' + this.props.channelId // Allows to send proper SSE messages from server
@@ -61,31 +46,6 @@ class Channel extends React.Component {
 			this.setState({messages: JSON.parse(e.data)}) 
 		};
 	}
-
-	renderMessages = () => {
-		if (this.state.messages.length < 1) {
-			return (
-				<div>
-					<div>Your message will be the first one</div>
-					<div style={{ float:"left", clear: "both" }} // This is fake div to scroll to the bottom of chat window (scrollToBottom)
-					    ref={el => { this.messagesEnd = el; }}>
-					</div>
-				</div>
-			)
-		} else {
-			return (
-				<div>
-					{this.state.messages.map(message => (<div key={message.id}>{message.userId} {message.date} {message.content}</div>))}
-					<div style={{ float:"left", clear: "both" }} // This is fake div to scroll to the bottom of chat window (scrollToBottom)
-					    ref={el => { this.messagesEnd = el; }}>
-					</div>
-				</div>
-			)
-		}
-	}
-
-	// message.date.getDate() + "-" + message.date.getMonth() + 1 + "-" + message.date.getFullYear() TODODODO
-	// .toLocaleDateString("en-US")
 
 	onMessageChange = (event) => {
 		this.setState({ messageText: event.target.value })
@@ -111,13 +71,15 @@ class Channel extends React.Component {
 	    this.setState({ messageText: "" });
 	}
 
+	keyPress = e => {
+	    (e.keyCode === 13) && this.sendMessage()
+	}
 	
-
 	render() {
 		return(
 			<ChannelWrapper>
-				<MessagesWrapper>{this.renderMessages()}</MessagesWrapper>
-				<input placeholder="Message text" onChange={this.onMessageChange} id="messageInput" autoComplete="off"/>
+				<MessagesList messages={this.state.messages}/>
+				<input placeholder="Message text" onChange={this.onMessageChange} id="messageInput" autoComplete="off" onKeyDown={this.keyPress}/>
 				<button onClick={this.sendMessage}>Send message</button>
 				<button onClick={() => {this.props.routeChanger("main")}}>Back</button>
 			</ChannelWrapper>
