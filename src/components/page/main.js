@@ -3,15 +3,17 @@ import styled from 'styled-components'
 import CreateChannel from '../common/createChannel'
 import ChannelsList from '../common/channelsList'
 
+import { Header } from 'semantic-ui-react'
+
 const MainWrapper = styled.div`
 	padding: 30px 100px 
 `
 
 const ChannelsWrapper = styled.div`
-	height: 300px;
 	width: 800px;
 	border: 1px solid black;
-	overflow: auto
+	overflow: auto;
+	margin: 0 auto;
 `
 
 
@@ -36,9 +38,11 @@ class Main extends React.Component {
 	render() {
 	  	return(
 	  		<MainWrapper>
-	  			<ChannelsWrapper><ChannelsList refreshChannelState={this.state.refreshChannelState} routeChanger={this.props.routeChanger}/></ChannelsWrapper>
-	  			<button onClick={this.newChannelClick}>New channel</button>
-	  			{this.state.newChannelClicked && <CreateChannel newChannelClick={this.newChannelClick} refreshChannelList={this.refreshChannelList}/>}
+	  			<ChannelsWrapper>
+	  				<Header as='h1' textAlign="center">Channels</Header>
+	  				<ChannelsList refreshChannelState={this.state.refreshChannelState} routeChanger={this.props.routeChanger}/>
+	  			</ChannelsWrapper>
+	  			<CreateChannel refreshChannelList={this.refreshChannelList}/>
 	  		</MainWrapper>
 	  	)
 	}	

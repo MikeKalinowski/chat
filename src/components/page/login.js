@@ -1,22 +1,18 @@
 import React from 'react';
 import styled from 'styled-components'
+import { Button, Divider, Form, Grid, Segment, Header, Message } from 'semantic-ui-react'
 
 const LoginWrapper = styled.div`
-	text-align: center
-`
-
-const Title = styled.div`
-	font-weight: 600;
-	line-height: 46px;
-	font-size: 30px;
+	text-align: center;
+	width: 600px;
+	position: absolute;
+	top: 40%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 `
 
 const Text = styled.div`
-	
-`
-
-const InputsWrapper = styled.div`
-	
+	margin-bottom: 25px;
 `
 
 class Login extends React.Component {
@@ -76,20 +72,27 @@ class Login extends React.Component {
 	render() {
 	  	return(
 	  		<LoginWrapper>
-	  			<Title>Chatty Chat</Title>
-	  			<Text>Welcome to Chatty Chat<br />Place where you chat to chat when you chat.</Text>
-	  			<InputsWrapper>
-	  				<fieldset>
-	  					{this.errorMessage()}
-	  					Name: <input type="text" placeholder="Name" onChange={this.onNameChange}/><br />
-	  					Password: <input type="text" placeholder="Password" onChange={this.onPasswordChange}/><br />
-	  				</fieldset>
-	  			</InputsWrapper>
-	  			<button onClick={this.onLogin}>Log in</button>
-	  			<button onClick={() => this.props.routeChanger("register")}>Register</button>
-	  			<div>
-	  				{/* <button>Login as anonymous</button> */}
-	  			</div>
+	  			<Header as='h1'>Chatty Chat</Header>
+	  			<Text>Welcome to Chatty Chat<br />It's a simple chat app made to practise back-end stack. <br /> You can register a new user (no e-mail required) or simply sign up with login: anon, pass: anon</Text>
+	  			<Segment placeholder>
+	  			    <Grid columns={2} relaxed='very' stackable>
+	  			      	<Grid.Column>
+	  			        	<Form error>
+	  			        		<Message
+	  			        		    error
+	  			        		    content={this.errorMessage()}
+	  			        		/>
+	  			          		<Form.Input icon='user' iconPosition='left' label='Username' placeholder='Username' onChange={this.onNameChange} />
+	  			          		<Form.Input icon='lock' iconPosition='left' label='Password' type='password' onChange={this.onPasswordChange} />
+	  			          		<Button content='Login' primary onClick={this.onLogin} />
+	  			        	</Form>
+	  			      	</Grid.Column>
+	  			      	<Grid.Column verticalAlign='middle'>
+	  			        	<Button content='Sign up' icon='signup' size='big' onClick={() => this.props.routeChanger("register")} />
+	  			      	</Grid.Column>
+	  			    </Grid>
+	  			    <Divider vertical>Or</Divider>
+	  			</Segment>
 	  		</LoginWrapper>
 	  	)
 	}	

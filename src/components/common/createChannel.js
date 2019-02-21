@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components'
 
+import { Button, Modal, Message, Form } from 'semantic-ui-react'
+
 const NewChannelWrapper = styled.div`
 	
 `
@@ -10,12 +12,18 @@ class CreateChannel extends React.Component {
 		super(props);
 		this.state = {
 			newChannelName: "",
+			newChannelDescription: "",
 			errorCreating: "",
+			modalOpen: false
 	    }
 	}
 
 	onChannelNameChange = (event) => {
 		this.setState({ newChannelName: event.target.value })
+	}
+
+	onChannelDescriptionChange = (event) => {
+		this.setState({ newChannelDescription: event.target.value })
 	}
 
 	createChannel = () => {
@@ -27,13 +35,14 @@ class CreateChannel extends React.Component {
 				headers: {'Content-Type': 'application/json'},
 				body: JSON.stringify({
 				    newChannelName: this.state.newChannelName,
+				    newChannelDescription: this.state.newChannelDescription,
 				})
 			})
 			.then(res => res.json())
 			.then(res => {
 				if (res === "Channel Added") {
-					this.props.refreshChannelList()
-					this.props.newChannelClick(); // Hiding this component // TODO: Add some pretty transition
+					this.props.refreshChannelList();
+					this.handleClose()
 				} else if (res === "Existing") {
 					this.setState({ errorCreating: "Existing" })
 				} else {
@@ -53,14 +62,36 @@ class CreateChannel extends React.Component {
 		}
 	}
 
+	handleOpen = () => this.setState({ modalOpen: true })
+
+	handleClose = () => this.setState({ modalOpen: false })
+
 	render() {
 		return(
 			<NewChannelWrapper>
-				{this.errorMessage()}
-				<input placeholder="channel name" onChange={this.onChannelNameChange} />
-				<button onClick={this.createChannel}>Create</button>
+				<Modal 
+					trigger={<Button onClick={this.handleOpen}>New Channel</Button>}
+					size="mini"
+					open={this.state.modalOpen}
+					onClose={this.handleClose}
+				>
+				    <Modal.Header>Create channel</Modal.Header>
+				    <Modal.Content>
+				      	<Modal.Description>
+			      			<Form error>
+			      				<Message
+			      				    error
+			      				    content={this.errorMessage()}
+			      				/>
+			      		  		<Form.Input label='Channel name' placeholder='Channel name' onChange={this.onChannelNameChange} />
+			      		  		<Form.Input label='Description' type='Description' onChange={this.onChannelDescriptionChange} />
+			      		  		<Button content='Create' primary onClick={this.createChannel} />
+			      			</Form>
+				      	</Modal.Description>
+				    </Modal.Content>
+				</Modal>
 			</NewChannelWrapper>
-			)
+		)
 	}
 }
 

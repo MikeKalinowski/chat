@@ -1,9 +1,6 @@
 import React from 'react';
-import styled from 'styled-components'
 
-const ChannelsListWrapper = styled.div`
-	
-`
+import { Card } from 'semantic-ui-react'
 
 class ChannelsList extends React.Component {
 	constructor(props) {
@@ -29,14 +26,21 @@ class ChannelsList extends React.Component {
 	}
 
 	renderChannels = () => {
-		return this.state.channels.map(channel => (<div key={channel.id} onClick={() => this.props.routeChanger("channel", channel.id)}>{channel.name}</div>))
+		return this.state.channels.map(channel => (
+			<Card key={channel.id} onClick={() => this.props.routeChanger("channel", channel.id)}>
+			  <Card.Content>
+			    <Card.Header>{channel.name}</Card.Header>
+			    <Card.Description>{channel.description}</Card.Description>
+			  </Card.Content>
+			</Card>
+		))
 	}
 
 	render() {
 		return(
-			<ChannelsListWrapper>
+			<Card.Group centered>
 				{this.renderChannels()}
-			</ChannelsListWrapper>
+			</Card.Group>
 			)
 	}
 }

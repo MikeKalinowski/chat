@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ThemeProvider } from 'styled-components';
 import styled from 'styled-components'
+import 'semantic-ui-css/semantic.min.css'
 
 import Login from './components/page/login.js';
 import Register from './components/page/register.js';
