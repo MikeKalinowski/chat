@@ -1,26 +1,27 @@
 import React from 'react';
 import styled from 'styled-components'
 
-const RegisterWrapper = styled.div`
-	text-align: center
-	padding-top: 10%;
+import { Container, Button, Form, Segment, Header, Message } from 'semantic-ui-react'
+
+const StyledContainer = styled(Container)`
+	&&& {
+		text-align: center;
+		margin-top: 15vh
+		max-width: 400px!important;
+
+		@media (max-width: 767px) {
+		  margin-top: 40px
+		}
+	}
 `
 
-const Title = styled.div`
-	font-weight: 600;
-	line-height: 46px;
-	font-size: 30px;
+const Link = styled.a`
+	display: block;
+	padding-top: 10px;
+	text-decoration: underline;
+	cursor: pointer;
+	color: inherit;
 `
-
-const Text = styled.div`
-	
-`
-
-const InputsWrapper = styled.div`
-	
-`
-
-
 
 class Register extends React.Component {
 	constructor(props) {
@@ -63,7 +64,6 @@ class Register extends React.Component {
 				}
 			})
 		}
-		
 	}
 
 	errorMessage = () => {
@@ -78,20 +78,18 @@ class Register extends React.Component {
 
 	render() {
 	  	return(
-	  		<RegisterWrapper>
-	  			<Title>Chatty Chat</Title>
-	  			<Text>YOU REGISTER HERE NOW. GOOD.</Text>
-	  			<InputsWrapper>
-	  				<fieldset>
-	  					{this.errorMessage()}
-	  					Name: <input type="text" placeholder="Name" onChange={this.onNameChange}/><br />
-	  					Password: <input type="text" placeholder="Password" onChange={this.onPasswordChange}/><br />
-	  				</fieldset>
-	  			</InputsWrapper>
-	  			<button onClick={this.onRegister}>Register</button>
-	  			<div>
-	  			</div>
-	  		</RegisterWrapper>
+	  		<StyledContainer>
+	  			<Header as='h1'>Register</Header>
+	  			<Segment placeholder padded='very'>
+		        	<Form error>
+		        		<Message error content={this.errorMessage()} />
+		          		<Form.Input icon='user' iconPosition='left' label='Username' placeholder='Username' onChange={this.onNameChange} />
+		          		<Form.Input icon='lock' iconPosition='left' label='Password' type='password' onChange={this.onPasswordChange} />
+		          		<Button content='Register' primary onClick={this.onRegister} />
+		          		<Link onClick={() => this.props.routeChanger("login")}>Back to login</Link>
+		        	</Form>
+	  			</Segment>
+	  		</StyledContainer>
 	  	)
 	}	
 }

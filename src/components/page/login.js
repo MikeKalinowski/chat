@@ -1,18 +1,21 @@
 import React from 'react';
 import styled from 'styled-components'
-import { Button, Divider, Form, Grid, Segment, Header, Message } from 'semantic-ui-react'
+import { Container, Button, Divider, Form, Grid, Segment, Header, Message } from 'semantic-ui-react'
 
-const LoginWrapper = styled.div`
-	text-align: center;
-	width: 600px;
-	position: absolute;
-	top: 40%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+const StyledContainer = styled(Container)`
+	&&& {
+		text-align: center;
+		margin-top: 15vh
+		max-width: 800px!important;
+
+		@media (max-width: 767px) {
+		  margin-top: 40px
+		}
+	}
 `
 
 const Text = styled.div`
-	margin-bottom: 25px;
+	margin-bottom: 20px;
 `
 
 class Login extends React.Component {
@@ -21,8 +24,20 @@ class Login extends React.Component {
 		this.state = {
 		    name: "",
 		    password: "",
-		    errorLogging: ""
-	    }
+		    errorLogging: "",
+		    size: ""
+	    };
+	    this.mobileViewport = window.matchMedia("screen and (max-width: 767px)");
+	}
+
+	componentDidMount() {
+		this.screenSizeCheck(this.mobileViewport)
+		this.mobileViewport.addListener(this.screenSizeCheck)
+	}
+
+	// Pretty little thing that does media queries in js
+	screenSizeCheck = (mq) => {
+		mq.matches ? this.setState({ size: "small" }) : this.setState({ size: "big" })
 	}
 
 	onNameChange = (event) => {
@@ -48,7 +63,7 @@ class Login extends React.Component {
 			.then(res => res.json())
 			.then(res => {
 				if (res.name) {
-					this.props.routeChanger("main")
+					this.props.routeChanger("login")
 				} else if (res === "No User") {
 					this.setState({ errorLogging: "noUser" })
 				} else {
@@ -71,29 +86,27 @@ class Login extends React.Component {
 
 	render() {
 	  	return(
-	  		<LoginWrapper>
+	  		<StyledContainer>
 	  			<Header as='h1'>Chatty Chat</Header>
-	  			<Text>Welcome to Chatty Chat<br />It's a simple chat app made to practise back-end stack. <br /> You can register a new user (no e-mail required) or simply sign up with login: anon, pass: anon</Text>
+	  			<Text>Welcome to Chatty Chat<br />It's a simple chat app made to practise back-end stack. <br /> You can register a new user (no e-mail required) or sign up with login: anon, pass: anon</Text>
 	  			<Segment placeholder>
 	  			    <Grid columns={2} relaxed='very' stackable>
 	  			      	<Grid.Column>
 	  			        	<Form error>
-	  			        		<Message
-	  			        		    error
-	  			        		    content={this.errorMessage()}
-	  			        		/>
+	  			        		<Message error content={this.errorMessage()} />
 	  			          		<Form.Input icon='user' iconPosition='left' label='Username' placeholder='Username' onChange={this.onNameChange} />
 	  			          		<Form.Input icon='lock' iconPosition='left' label='Password' type='password' onChange={this.onPasswordChange} />
 	  			          		<Button content='Login' primary onClick={this.onLogin} />
 	  			        	</Form>
 	  			      	</Grid.Column>
+	  			      	{(this.state.size==="small") && <Divider horizontal></Divider>}
 	  			      	<Grid.Column verticalAlign='middle'>
 	  			        	<Button content='Sign up' icon='signup' size='big' onClick={() => this.props.routeChanger("register")} />
 	  			      	</Grid.Column>
 	  			    </Grid>
-	  			    <Divider vertical>Or</Divider>
+	  			    {(this.state.size==="big") && <Divider vertical>Or</Divider>}
 	  			</Segment>
-	  		</LoginWrapper>
+	  		</StyledContainer>
 	  	)
 	}	
 }

@@ -1,6 +1,9 @@
 import React from 'react';
 
-import { Card } from 'semantic-ui-react'
+
+import { Card, Segment } from 'semantic-ui-react'
+
+
 
 class ChannelsList extends React.Component {
 	constructor(props) {
@@ -38,10 +41,12 @@ class ChannelsList extends React.Component {
 
 	render() {
 		return(
-			<Card.Group centered>
-				{this.renderChannels()}
-			</Card.Group>
-			)
+			<Segment placeholder>
+				<Card.Group centered>
+					{this.renderChannels()}
+				</Card.Group>
+			</Segment>
+		)
 	}
 }
 

@@ -27,7 +27,7 @@ class CreateChannel extends React.Component {
 	}
 
 	createChannel = () => {
-		if (!this.state.newChannelName) {
+		if (!this.state.newChannelName || !this.state.newChannelDescription) {
 			this.setState({ errorCreating: "Empty" })
 		} else {
 			fetch('http://localhost:8000/createChannel', {
@@ -58,7 +58,7 @@ class CreateChannel extends React.Component {
 		} else if (this.state.errorCreating === "Error") {
 			return (<div>Error creating channel. Please try again later</div>)
 		} else if (this.state.errorCreating === "Empty") {
-			return (<div>Please enter channel name</div>)
+			return (<div>Please enter channel name and description</div>)
 		}
 	}
 

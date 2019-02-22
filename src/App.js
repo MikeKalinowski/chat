@@ -19,13 +19,12 @@ class App extends Component {
 		super(props)
 
 		this.state = {
-			route: "main",
+			route: "login",
 			channelId: 0
 		}
 	}
 
 	routePicker = () => {
-		console.log("routePicker")
 		if (this.state.route === "register") {
 			return (<Register routeChanger={this.routeChanger}/>)
 		} else if (this.state.route === "main") {
@@ -38,9 +37,8 @@ class App extends Component {
 	}
 
 	routeChanger = (newRoute, channelId) => {
-		channelId && this.setState({channelId: channelId});
+		channelId && this.setState({channelId: channelId}); // takes channelId of clicked channel from Main component to pass it to Channel
 		this.setState({route: newRoute});
-		console.log("routeChanger");
 	}
 
   	render() {

@@ -1,12 +1,10 @@
 import React from 'react';
 import styled from 'styled-components'
-import { Comment } from 'semantic-ui-react'
+import { Comment, Segment } from 'semantic-ui-react'
 
-const MessagesWrapper = styled.div`
+const StyledSegment = styled(Segment)`
 	height: 300px;
-	width: 800px;
-	border: 1px solid black;
-	overflow: auto
+	overflow: auto;
 `
 
 class MessagesList extends React.Component {
@@ -27,39 +25,41 @@ class MessagesList extends React.Component {
 
 	// Scrolls to the bottom of chat window (newest message)
 	scrollToBottom = () => { 
-	  this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+	  this.messagesEnd.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+	}
+
+	dateMagic = (date) => {
+		let a = new Date(date)
+		let finalDate = a.getHours() + ":" + a.getMinutes() + ":" + a.getSeconds()
+		return finalDate
 	}
 
 	renderMessages = () => {
 		return (this.props.messages.map(message => 
 			<Comment key={message.id}>
-			   	<Comment.Avatar src='https://react.semantic-ui.com/images/avatar/small/matt.jpg' />
+			   	<Comment.Avatar src='https://ui-avatars.com/api/?name=Mike&length=1&rounded=true' />
 			   	<Comment.Content>
 			     	<Comment.Author as='a'>{message.userId}</Comment.Author>
 			     	<Comment.Metadata>
-			       		<div>{message.date}</div>
+			       		<div>{this.dateMagic(message.date)}</div>
 			     	</Comment.Metadata>
 			     	<Comment.Text>{message.content}</Comment.Text>
 			   </Comment.Content>
 			</Comment>
 		))	
 	}
-
-	// message.date.getDate() + "-" + message.date.getMonth() + 1 + "-" + message.date.getFullYear() TODODODO
-	// .toLocaleDateString("en-US")
-
+	// Math.floor(Math.random()*16777215).toString(16) // TODO // Random hex color for avatars 
 
 	render() {
 		return(
-			<MessagesWrapper>
+			<StyledSegment>
 				{(this.props.messages.length < 1) && (<div>Your message will be the first one</div>)}
 				<Comment.Group>
 					{this.renderMessages()}
 				</Comment.Group>
-				<div style={{ float:"left", clear: "both" }} // This is dummy div needed to scroll to the bottom of chat window (scrollToBottom)
-				    ref={el => { this.messagesEnd = el; }}>
-				</div>
-			</MessagesWrapper>
+				<div style={{ float:"left", clear: "both" }} // Dummy div needed to scroll to the bottom of chat window (scrollToBottom)
+				    ref={el => { this.messagesEnd = el; }} />
+			</StyledSegment>
 		)
 	}
 }

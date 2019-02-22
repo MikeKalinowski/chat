@@ -1,17 +1,22 @@
 import React from 'react';
 import styled from 'styled-components'
-
 import MessagesList from '../common/messagesList'
+import SendMessage from '../common/sendMessage'
 
-const ChannelWrapper = styled.div`
-	padding: 30px 100px 
+import { Container } from 'semantic-ui-react'
+
+
+const StyledContainer = styled(Container)`
+	&&& {
+		margin-top: 60px;
+		max-width: 800px!important;
+	}
 `
 
 class Channel extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			messageText: "",
 			messages: []
 	    };
 	    this.eventSource = ""
@@ -26,7 +31,7 @@ class Channel extends React.Component {
 		this.eventSource.close()
 	}
 
-	getMessages() {
+	getMessages = () => {
 		fetch('http://localhost:8000/messagesList', {
 			method: 'post',
 			headers: {'Content-Type': 'application/json'},
@@ -46,43 +51,13 @@ class Channel extends React.Component {
 			this.setState({messages: JSON.parse(e.data)}) 
 		};
 	}
-
-	onMessageChange = (event) => {
-		this.setState({ messageText: event.target.value })
-	}
-
-	sendMessage = () => {
-		this.state.messageText && fetch('http://localhost:8000/sendMessage', {
-			method: 'post',
-			headers: {'Content-Type': 'application/json'},
-			body: JSON.stringify({
-			    content: this.state.messageText,
-			    userId: 1,
-			    channelId: this.props.channelId,
-			})
-		})
-		.then(() => this.getMessages())
-		.then(() => this.resetInput())
-	}
-
-	resetInput = () => {
-	    const resetButton = document.getElementById("messageInput");
-	    resetButton.value = "";
-	    this.setState({ messageText: "" });
-	}
-
-	keyPress = e => {
-	    (e.keyCode === 13) && this.sendMessage()
-	}
 	
 	render() {
 		return(
-			<ChannelWrapper>
+			<StyledContainer>
 				<MessagesList messages={this.state.messages}/>
-				<input placeholder="Message text" onChange={this.onMessageChange} id="messageInput" autoComplete="off" onKeyDown={this.keyPress}/>
-				<button onClick={this.sendMessage}>Send message</button>
-				<button onClick={() => {this.props.routeChanger("main")}}>Back</button>
-			</ChannelWrapper>
+				<SendMessage routeChanger={this.props.routeChanger} getMessages={this.getMessages} channelId={this.props.channelId}/>
+			</StyledContainer>
 			)
 	}
 }
