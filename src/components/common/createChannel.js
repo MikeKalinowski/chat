@@ -30,7 +30,7 @@ class CreateChannel extends React.Component {
 		if (!this.state.newChannelName || !this.state.newChannelDescription) {
 			this.setState({ errorCreating: "Empty" });
 		} else {
-			fetch('http://localhost:8000/createChannel', {
+			fetch('https://chattychat777.herokuapp.com/createChannel', {
 				method: 'post',
 				headers: {'Content-Type': 'application/json'},
 				body: JSON.stringify({

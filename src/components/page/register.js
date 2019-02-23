@@ -45,7 +45,7 @@ class Register extends React.Component {
 		if (!this.state.name || !this.state.password) {
 			this.setState({ errorRegistering: "Empty" });
 		} else {
-			fetch('http://localhost:8000/register', {
+			fetch('https://chattychat777.herokuapp.com/register', {
 				method: 'post',
 				headers: {'Content-Type': 'application/json'},
 				body: JSON.stringify({

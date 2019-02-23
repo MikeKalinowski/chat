@@ -52,7 +52,7 @@ class Login extends React.Component {
 		if (!this.state.name || !this.state.password) {
 			this.setState({ errorLogging: "empty" })
 		} else {
-			fetch('http://localhost:8000/login', {
+			fetch('https://chattychat777.herokuapp.com/login', {
 				method: 'post',
 				headers: {'Content-Type': 'application/json'},
 				body: JSON.stringify({

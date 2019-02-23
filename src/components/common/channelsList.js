@@ -23,7 +23,7 @@ class ChannelsList extends React.Component {
 	}
 
 	getChannels = () => {
-		fetch('http://localhost:8000/channelsList')
+		fetch('https://chattychat777.herokuapp.com/channelsList')
 		.then(res => res.json())
 		.then(res => {this.setState({channels: res})})
 	}

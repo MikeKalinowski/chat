@@ -19,7 +19,7 @@ class SendMessage extends React.Component {
 	}
 
 	sendMessage = () => {
-		this.state.messageText && fetch('http://localhost:8000/sendMessage', {
+		this.state.messageText && fetch('https://chattychat777.herokuapp.com/sendMessage', {
 			method: 'post',
 			headers: {'Content-Type': 'application/json'},
 			body: JSON.stringify({
