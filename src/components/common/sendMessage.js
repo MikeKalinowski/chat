@@ -24,7 +24,7 @@ class SendMessage extends React.Component {
 			headers: {'Content-Type': 'application/json'},
 			body: JSON.stringify({
 			    content: this.state.messageText,
-			    userId: 1,
+			    userId: this.props.user.id,
 			    channelId: this.props.channelId,
 			})
 		})

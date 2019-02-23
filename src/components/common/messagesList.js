@@ -12,7 +12,7 @@ class MessagesList extends React.Component {
 		super(props);
 		this.state = {
 	    };
-	    this.eventSource = ""
+	    this.eventSource = "";
 	}
 
 	componentDidMount() {
@@ -30,16 +30,21 @@ class MessagesList extends React.Component {
 
 	dateMagic = (date) => {
 		let a = new Date(date)
-		let finalDate = a.getHours() + ":" + a.getMinutes() + ":" + a.getSeconds()
-		return finalDate
+		let hh = a.getHours();
+		let mm = a.getMinutes();
+		let ss = a.getSeconds();
+		(mm < 10) && (mm = '0' + mm);
+		(ss < 10) && (ss = '0' + ss);
+		let finalDate = hh + ":" + mm + ":" + ss;
+		return finalDate;
 	}
 
 	renderMessages = () => {
 		return (this.props.messages.map(message => 
 			<Comment key={message.id}>
-			   	<Comment.Avatar src='https://ui-avatars.com/api/?name=Mike&length=1&rounded=true' />
+			   	<Comment.Avatar src={"https://ui-avatars.com/api/?name=" + message.name + "&background=" + message.avatarColor + "&length=1&rounded=true"} />
 			   	<Comment.Content>
-			     	<Comment.Author as='a'>{message.userId}</Comment.Author>
+			     	<Comment.Author as='a'>{message.name}</Comment.Author>
 			     	<Comment.Metadata>
 			       		<div>{this.dateMagic(message.date)}</div>
 			     	</Comment.Metadata>

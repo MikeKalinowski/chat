@@ -55,7 +55,11 @@ class Register extends React.Component {
 			})
 			.then(res => res.json())
 			.then(res => {
-				if (res === "User Added") {
+				if (res.id) {
+					this.props.saveUserData({
+						id: res.id,
+						name: this.state.name
+					});
 					this.props.routeChanger("main")
 				} else if (res === "Existing") {
 					this.setState({ errorRegistering: "Existing" })

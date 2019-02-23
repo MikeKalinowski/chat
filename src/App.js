@@ -20,25 +20,31 @@ class App extends Component {
 
 		this.state = {
 			route: "login",
-			channelId: 0
+			channelId: 0,
+			user: {}
 		}
 	}
 
 	routePicker = () => {
 		if (this.state.route === "register") {
-			return (<Register routeChanger={this.routeChanger}/>)
+			return (<Register routeChanger={this.routeChanger} saveUserData={this.saveUserData}/>)
 		} else if (this.state.route === "main") {
-			return (<Main routeChanger={this.routeChanger}/>)
+			return (<Main routeChanger={this.routeChanger} user={this.state.user}/>)
 		} else if (this.state.route === "login") {
-			return (<Login routeChanger={this.routeChanger}/>)
+			return (<Login routeChanger={this.routeChanger} saveUserData={this.saveUserData}/>)
 		} else if (this.state.route === "channel") {
-			return (<Channel routeChanger={this.routeChanger} channelId={this.state.channelId}/>)
+			return (<Channel routeChanger={this.routeChanger} channelId={this.state.channelId} user={this.state.user}/>)
 		}
 	}
 
 	routeChanger = (newRoute, channelId) => {
 		channelId && this.setState({channelId: channelId}); // takes channelId of clicked channel from Main component to pass it to Channel
 		this.setState({route: newRoute});
+	}
+
+	// Saving data from db
+	saveUserData = (data) => {
+		this.setState({ user: data})
 	}
 
   	render() {

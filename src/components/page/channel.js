@@ -56,7 +56,7 @@ class Channel extends React.Component {
 		return(
 			<StyledContainer>
 				<MessagesList messages={this.state.messages}/>
-				<SendMessage routeChanger={this.props.routeChanger} getMessages={this.getMessages} channelId={this.props.channelId}/>
+				<SendMessage routeChanger={this.props.routeChanger} getMessages={this.getMessages} channelId={this.props.channelId} user={this.props.user}/>
 			</StyledContainer>
 			)
 	}

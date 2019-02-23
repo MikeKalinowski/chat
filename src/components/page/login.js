@@ -25,7 +25,7 @@ class Login extends React.Component {
 		    name: "",
 		    password: "",
 		    errorLogging: "",
-		    size: ""
+		    size: "",
 	    };
 	    this.mobileViewport = window.matchMedia("screen and (max-width: 767px)");
 	}
@@ -63,6 +63,7 @@ class Login extends React.Component {
 			.then(res => res.json())
 			.then(res => {
 				if (res.name) {
+					this.props.saveUserData(res);
 					this.props.routeChanger("main")
 				} else if (res === "No User") {
 					this.setState({ errorLogging: "noUser" })
@@ -71,7 +72,6 @@ class Login extends React.Component {
 				}
 			})
 		}
-		
 	}
 
 	errorMessage = () => {
