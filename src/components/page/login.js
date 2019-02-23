@@ -63,7 +63,7 @@ class Login extends React.Component {
 			.then(res => res.json())
 			.then(res => {
 				if (res.name) {
-					this.props.routeChanger("login")
+					this.props.routeChanger("main")
 				} else if (res === "No User") {
 					this.setState({ errorLogging: "noUser" })
 				} else {
