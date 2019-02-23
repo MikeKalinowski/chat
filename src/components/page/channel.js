@@ -28,7 +28,7 @@ class Channel extends React.Component {
 	}
 
 	componentWillUnmount() {
-		this.eventSource.close()
+		this.eventSource.close();
 	}
 
 	getMessages = () => {
@@ -48,7 +48,7 @@ class Channel extends React.Component {
 		const urlWithChannelId = 'http://localhost:8000/messagesListSSE/' + this.props.channelId // Allows to send proper SSE messages from server
 		this.eventSource = new EventSource(urlWithChannelId);
 		this.eventSource.onmessage = (e) => {
-			this.setState({messages: JSON.parse(e.data)}) 
+			this.setState({messages: JSON.parse(e.data)}); 
 		};
 	}
 	
@@ -56,7 +56,7 @@ class Channel extends React.Component {
 		return(
 			<StyledContainer>
 				<MessagesList messages={this.state.messages}/>
-				<SendMessage routeChanger={this.props.routeChanger} getMessages={this.getMessages} channelId={this.props.channelId} user={this.props.user}/>
+				<SendMessage changeRoute={this.props.changeRoute} getMessages={this.getMessages} channelId={this.props.channelId} user={this.props.user}/>
 			</StyledContainer>
 			)
 	}

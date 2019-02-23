@@ -25,19 +25,19 @@ class App extends Component {
 		}
 	}
 
-	routePicker = () => {
+	pickRoute = () => {
 		if (this.state.route === "register") {
-			return (<Register routeChanger={this.routeChanger} saveUserData={this.saveUserData}/>)
+			return (<Register changeRoute={this.changeRoute} saveUserData={this.saveUserData}/>)
 		} else if (this.state.route === "main") {
-			return (<Main routeChanger={this.routeChanger} user={this.state.user}/>)
+			return (<Main changeRoute={this.changeRoute} user={this.state.user}/>)
 		} else if (this.state.route === "login") {
-			return (<Login routeChanger={this.routeChanger} saveUserData={this.saveUserData}/>)
+			return (<Login changeRoute={this.changeRoute} saveUserData={this.saveUserData}/>)
 		} else if (this.state.route === "channel") {
-			return (<Channel routeChanger={this.routeChanger} channelId={this.state.channelId} user={this.state.user}/>)
+			return (<Channel changeRoute={this.changeRoute} channelId={this.state.channelId} user={this.state.user}/>)
 		}
 	}
 
-	routeChanger = (newRoute, channelId) => {
+	changeRoute = (newRoute, channelId) => {
 		channelId && this.setState({channelId: channelId}); // takes channelId of clicked channel from Main component to pass it to Channel
 		this.setState({route: newRoute});
 	}
@@ -51,7 +51,7 @@ class App extends Component {
 		return (
 		  	<ThemeProvider theme={Theme}>
 		  		<MainWrapper>
-		  			{this.routePicker()}
+		  			{this.pickRoute()}
 		  		</MainWrapper>
 		  	</ThemeProvider>
 		);

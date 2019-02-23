@@ -15,7 +15,7 @@ class ChannelsList extends React.Component {
 	}
 
 	componentDidMount() {
-		this.getChannels()
+		this.getChannels();
 	}
 
 	componentDidUpdate(prevProps) {
@@ -30,7 +30,7 @@ class ChannelsList extends React.Component {
 
 	renderChannels = () => {
 		return this.state.channels.map(channel => (
-			<Card key={channel.id} onClick={() => this.props.routeChanger("channel", channel.id)}>
+			<Card key={channel.id} onClick={() => this.props.changeRoute("channel", channel.id)}>
 			  <Card.Content>
 			    <Card.Header>{channel.name}</Card.Header>
 			    <Card.Description>{channel.description}</Card.Description>

@@ -31,21 +31,21 @@ class Login extends React.Component {
 	}
 
 	componentDidMount() {
-		this.screenSizeCheck(this.mobileViewport)
-		this.mobileViewport.addListener(this.screenSizeCheck)
+		this.checkScreenSize(this.mobileViewport);
+		this.mobileViewport.addListener(this.checkScreenSize);
 	}
 
 	// Pretty little thing that does media queries in js
-	screenSizeCheck = (mq) => {
-		mq.matches ? this.setState({ size: "small" }) : this.setState({ size: "big" })
+	checkScreenSize = (mq) => {
+		mq.matches ? this.setState({ size: "small" }) : this.setState({ size: "big" });
 	}
 
 	onNameChange = (event) => {
-	  	this.setState({name: event.target.value})
+	  	this.setState({name: event.target.value});
 	}
 
 	onPasswordChange = (event) => {
-	  	this.setState({password: event.target.value})
+	  	this.setState({password: event.target.value});
 	}
 
 	onLogin = () => {
@@ -64,17 +64,17 @@ class Login extends React.Component {
 			.then(res => {
 				if (res.name) {
 					this.props.saveUserData(res);
-					this.props.routeChanger("main")
+					this.props.changeRoute("main");
 				} else if (res === "No User") {
-					this.setState({ errorLogging: "noUser" })
+					this.setState({ errorLogging: "noUser" });
 				} else {
-					this.setState({ errorLogging: "error" })
+					this.setState({ errorLogging: "error" });
 				}
 			})
 		}
 	}
 
-	errorMessage = () => {
+	setErrorMessage = () => {
 		if (this.state.errorLogging === "noUser") {
 			return (<div>Incorrect user or password</div>)
 		} else if (this.state.errorLogging === "error") {
@@ -93,7 +93,7 @@ class Login extends React.Component {
 	  			    <Grid columns={2} relaxed='very' stackable>
 	  			      	<Grid.Column>
 	  			        	<Form error>
-	  			        		<Message error content={this.errorMessage()} />
+	  			        		<Message error content={this.setErrorMessage()} />
 	  			          		<Form.Input icon='user' iconPosition='left' label='Username' placeholder='Username' onChange={this.onNameChange} />
 	  			          		<Form.Input icon='lock' iconPosition='left' label='Password' type='password' onChange={this.onPasswordChange} />
 	  			          		<Button content='Login' primary onClick={this.onLogin} />
@@ -101,7 +101,7 @@ class Login extends React.Component {
 	  			      	</Grid.Column>
 	  			      	{(this.state.size==="small") && <Divider horizontal></Divider>}
 	  			      	<Grid.Column verticalAlign='middle'>
-	  			        	<Button content='Sign up' icon='signup' size='big' onClick={() => this.props.routeChanger("register")} />
+	  			        	<Button content='Sign up' icon='signup' size='big' onClick={() => this.props.changeRoute("register")} />
 	  			      	</Grid.Column>
 	  			    </Grid>
 	  			    {(this.state.size==="big") && <Divider vertical>Or</Divider>}

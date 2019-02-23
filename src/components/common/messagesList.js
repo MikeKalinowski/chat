@@ -28,7 +28,7 @@ class MessagesList extends React.Component {
 	  this.messagesEnd.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
 	}
 
-	dateMagic = (date) => {
+	makeDatePretty = (date) => {
 		let a = new Date(date)
 		let hh = a.getHours();
 		let mm = a.getMinutes();
@@ -46,7 +46,7 @@ class MessagesList extends React.Component {
 			   	<Comment.Content>
 			     	<Comment.Author as='a'>{message.name}</Comment.Author>
 			     	<Comment.Metadata>
-			       		<div>{this.dateMagic(message.date)}</div>
+			       		<div>{this.makeDatePretty(message.date)}</div>
 			     	</Comment.Metadata>
 			     	<Comment.Text>{message.content}</Comment.Text>
 			   </Comment.Content>

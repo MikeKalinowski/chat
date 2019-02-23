@@ -11,11 +11,11 @@ class SendMessage extends React.Component {
 	}
 
 	onMessageChange = (event) => {
-		this.setState({ messageText: event.target.value })
+		this.setState({ messageText: event.target.value });
 	}
 
 	onKeyPress = (event) => {
-	    (event.keyCode === 13) && this.sendMessage()
+	    (event.keyCode === 13) && this.sendMessage();
 	}
 
 	sendMessage = () => {
@@ -43,7 +43,7 @@ class SendMessage extends React.Component {
 			<Form reply>
 			    <Form.TextArea onChange={this.onMessageChange} onKeyDown={this.onKeyPress} placeholder="Message text" id="messageInput"/>
 			    <Button onClick={this.sendMessage} content='Send' labelPosition='left' icon='edit' primary />
-			    <Button onClick={() => {this.props.routeChanger("main")}}>Back</Button>
+			    <Button onClick={() => {this.props.changeRoute("main")}}>Back</Button>
 			</Form>
 		)
 	}

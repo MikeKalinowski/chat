@@ -34,16 +34,16 @@ class Register extends React.Component {
 	}
 
 	onNameChange = (event) => {
-	  	this.setState({name: event.target.value})
+	  	this.setState({name: event.target.value});
 	}
 
 	onPasswordChange = (event) => {
-	  	this.setState({password: event.target.value})
+	  	this.setState({password: event.target.value});
 	}
 
 	onRegister = () => {
 		if (!this.state.name || !this.state.password) {
-			this.setState({ errorRegistering: "Empty" })
+			this.setState({ errorRegistering: "Empty" });
 		} else {
 			fetch('http://localhost:8000/register', {
 				method: 'post',
@@ -60,17 +60,17 @@ class Register extends React.Component {
 						id: res.id,
 						name: this.state.name
 					});
-					this.props.routeChanger("main")
+					this.props.changeRoute("main");
 				} else if (res === "Existing") {
-					this.setState({ errorRegistering: "Existing" })
+					this.setState({ errorRegistering: "Existing" });
 				} else {
-					this.setState({ errorRegistering: "Error" })
+					this.setState({ errorRegistering: "Error" });
 				}
 			})
 		}
 	}
 
-	errorMessage = () => {
+	setErrorMessage = () => {
 		if (this.state.errorRegistering === "Existing") {
 			return (<div>User already exists</div>)
 		} else if (this.state.errorRegistering === "Error") {
@@ -86,11 +86,11 @@ class Register extends React.Component {
 	  			<Header as='h1'>Register</Header>
 	  			<Segment placeholder padded='very'>
 		        	<Form error>
-		        		<Message error content={this.errorMessage()} />
+		        		<Message error content={this.setErrorMessage()} />
 		          		<Form.Input icon='user' iconPosition='left' label='Username' placeholder='Username' onChange={this.onNameChange} />
 		          		<Form.Input icon='lock' iconPosition='left' label='Password' type='password' onChange={this.onPasswordChange} />
 		          		<Button content='Register' primary onClick={this.onRegister} />
-		          		<Link onClick={() => this.props.routeChanger("login")}>Back to login</Link>
+		          		<Link onClick={() => this.props.changeRoute("login")}>Back to login</Link>
 		        	</Form>
 	  			</Segment>
 	  		</StyledContainer>

@@ -19,16 +19,16 @@ class CreateChannel extends React.Component {
 	}
 
 	onChannelNameChange = (event) => {
-		this.setState({ newChannelName: event.target.value })
+		this.setState({ newChannelName: event.target.value });
 	}
 
 	onChannelDescriptionChange = (event) => {
-		this.setState({ newChannelDescription: event.target.value })
+		this.setState({ newChannelDescription: event.target.value });
 	}
 
 	createChannel = () => {
 		if (!this.state.newChannelName || !this.state.newChannelDescription) {
-			this.setState({ errorCreating: "Empty" })
+			this.setState({ errorCreating: "Empty" });
 		} else {
 			fetch('http://localhost:8000/createChannel', {
 				method: 'post',
@@ -42,17 +42,17 @@ class CreateChannel extends React.Component {
 			.then(res => {
 				if (res === "Channel Added") {
 					this.props.refreshChannelList();
-					this.handleClose()
+					this.handleModalClose();
 				} else if (res === "Existing") {
-					this.setState({ errorCreating: "Existing" })
+					this.setState({ errorCreating: "Existing" });
 				} else {
-					this.setState({ errorCreating: "Error" })
+					this.setState({ errorCreating: "Error" });
 				}
 			})
 		}
 	}
 
-	errorMessage = () => {
+	setErrorMessage = () => {
 		if (this.state.errorCreating === "Existing") {
 			return (<div>Channel with that name already exists</div>)
 		} else if (this.state.errorCreating === "Error") {
@@ -62,18 +62,18 @@ class CreateChannel extends React.Component {
 		}
 	}
 
-	handleOpen = () => this.setState({ modalOpen: true })
+	handleModalOpen = () => this.setState({ modalOpen: true });
 
-	handleClose = () => this.setState({ modalOpen: false })
+	handleModalClose = () => this.setState({ modalOpen: false });
 
 	render() {
 		return(
 			<NewChannelWrapper>
 				<Modal 
-					trigger={<Button onClick={this.handleOpen}>New Channel</Button>}
+					trigger={<Button onClick={this.handleModalOpen}>New Channel</Button>}
 					size="mini"
 					open={this.state.modalOpen}
-					onClose={this.handleClose}
+					onClose={this.handleModalClose}
 				>
 				    <Modal.Header>Create channel</Modal.Header>
 				    <Modal.Content>
@@ -81,7 +81,7 @@ class CreateChannel extends React.Component {
 			      			<Form error>
 			      				<Message
 			      				    error
-			      				    content={this.errorMessage()}
+			      				    content={this.setErrorMessage()}
 			      				/>
 			      		  		<Form.Input label='Channel name' placeholder='Channel name' onChange={this.onChannelNameChange} />
 			      		  		<Form.Input label='Description' type='Description' onChange={this.onChannelDescriptionChange} />
