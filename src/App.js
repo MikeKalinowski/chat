@@ -25,6 +25,15 @@ class App extends Component {
 		}
 	}
 
+	componentDidMount() {
+		this.wakeServerUp();
+	}
+
+	// Needed because heroku goes to sleep when idle. User will be able to do stuff faster
+	wakeServerUp = () => {
+		fetch('https://chattychat777.herokuapp.com/');
+	}
+
 	pickRoute = () => {
 		if (this.state.route === "register") {
 			return (<Register changeRoute={this.changeRoute} saveUserData={this.saveUserData}/>)
