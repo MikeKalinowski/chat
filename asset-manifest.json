@@ -1,0 +1,16 @@
+{
+  "main.css": "/chat/static/css/main.d8c13412.chunk.css",
+  "main.js": "/chat/static/js/main.b2764347.chunk.js",
+  "main.js.map": "/chat/static/js/main.b2764347.chunk.js.map",
+  "runtime~main.js": "/chat/static/js/runtime~main.e9b7a45a.js",
+  "runtime~main.js.map": "/chat/static/js/runtime~main.e9b7a45a.js.map",
+  "static/css/2.bab10522.chunk.css": "/chat/static/css/2.bab10522.chunk.css",
+  "static/js/2.3a15fe9f.chunk.js": "/chat/static/js/2.3a15fe9f.chunk.js",
+  "static/js/2.3a15fe9f.chunk.js.map": "/chat/static/js/2.3a15fe9f.chunk.js.map",
+  "index.html": "/chat/index.html",
+  "precache-manifest.7f00940b4de38c9ae726fff501ae6ba6.js": "/chat/precache-manifest.7f00940b4de38c9ae726fff501ae6ba6.js",
+  "service-worker.js": "/chat/service-worker.js",
+  "static/css/2.bab10522.chunk.css.map": "/chat/static/css/2.bab10522.chunk.css.map",
+  "static/css/main.d8c13412.chunk.css.map": "/chat/static/css/main.d8c13412.chunk.css.map",
+  "static/media/semantic.min.css": "/chat/static/media/outline-icons.ef60a4f6.woff"
+}
