@@ -29,7 +29,8 @@ class Register extends React.Component {
 		this.state = {
 		    name: "",
 		    password: "",
-		    errorRegistering: "no"
+		    errorRegistering: "no",
+		    buttonLoading: false
 	    }
 	}
 
@@ -45,6 +46,7 @@ class Register extends React.Component {
 		if (!this.state.name || !this.state.password) {
 			this.setState({ errorRegistering: "Empty" });
 		} else {
+			this.setState({ buttonLoading: true });
 			fetch('https://chattychat777.herokuapp.com/register', {
 				method: 'post',
 				headers: {'Content-Type': 'application/json'},
@@ -66,6 +68,9 @@ class Register extends React.Component {
 				} else {
 					this.setState({ errorRegistering: "Error" });
 				}
+			})
+			.then(() => {
+				this.setState({ buttonLoading: false })
 			})
 		}
 	}
@@ -89,7 +94,7 @@ class Register extends React.Component {
 		        		<Message error content={this.setErrorMessage()} />
 		          		<Form.Input icon='user' iconPosition='left' label='Username' placeholder='Username' onChange={this.onNameChange} />
 		          		<Form.Input icon='lock' iconPosition='left' label='Password' type='password' onChange={this.onPasswordChange} />
-		          		<Button content='Register' primary onClick={this.onRegister} />
+		          		{this.state.buttonLoading ? <Button loading primary content='Register'/> : <Button content='Register' primary onClick={this.onRegister} />}
 		          		<Link onClick={() => this.props.changeRoute("login")}>Back to login</Link>
 		        	</Form>
 	  			</Segment>

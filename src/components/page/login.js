@@ -26,6 +26,7 @@ class Login extends React.Component {
 		    password: "",
 		    errorLogging: "",
 		    size: "",
+		    buttonLoading: false
 	    };
 	    this.mobileViewport = window.matchMedia("screen and (max-width: 767px)");
 	}
@@ -52,6 +53,7 @@ class Login extends React.Component {
 		if (!this.state.name || !this.state.password) {
 			this.setState({ errorLogging: "empty" })
 		} else {
+			this.setState({ buttonLoading: true });
 			fetch('https://chattychat777.herokuapp.com/login', {
 				method: 'post',
 				headers: {'Content-Type': 'application/json'},
@@ -70,6 +72,9 @@ class Login extends React.Component {
 				} else {
 					this.setState({ errorLogging: "error" });
 				}
+			})
+			.then(() => {
+				this.setState({ buttonLoading: false })
 			})
 		}
 	}
@@ -96,7 +101,7 @@ class Login extends React.Component {
 	  			        		<Message error content={this.setErrorMessage()} />
 	  			          		<Form.Input icon='user' iconPosition='left' label='Username' placeholder='Username' onChange={this.onNameChange} />
 	  			          		<Form.Input icon='lock' iconPosition='left' label='Password' type='password' onChange={this.onPasswordChange} />
-	  			          		<Button content='Login' primary onClick={this.onLogin} />
+	  			          		{this.state.buttonLoading ? <Button loading primary content='Login'/> : <Button content='Login' primary onClick={this.onLogin} />}
 	  			        	</Form>
 	  			      	</Grid.Column>
 	  			      	{(this.state.size==="small") && <Divider horizontal></Divider>}
