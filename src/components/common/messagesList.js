@@ -55,10 +55,18 @@ class MessagesList extends React.Component {
 	}
 	// Math.floor(Math.random()*16777215).toString(16) // TODO // Random hex color for avatars 
 
+	showPlaceholderForMessages = () => {
+		if (this.props.messagesLoaded === true) {
+			return (this.props.messages.length < 1) && (<div>Your message will be the first one</div>)
+		} else {
+			return (<div>Loading messages...</div>)
+		} 
+	}
+
 	render() {
 		return(
 			<StyledSegment>
-				{(this.props.messages.length < 1) && (<div>Your message will be the first one</div>)}
+				{this.showPlaceholderForMessages()}
 				<Comment.Group>
 					{this.renderMessages()}
 				</Comment.Group>

@@ -17,7 +17,8 @@ class Channel extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			messages: []
+			messages: [],
+			messagesLoaded: false
 	    };
 	    this.eventSource = ""
 	}
@@ -40,7 +41,7 @@ class Channel extends React.Component {
 			})
 		})
 		.then(res => res.json())
-		.then(res => this.setState({messages: res}))
+		.then(res => this.setState({messages: res, messagesLoaded: true}))
 	}
 
 	//Server Sent Events listener that gets messages when sb writes new one
@@ -55,7 +56,7 @@ class Channel extends React.Component {
 	render() {
 		return(
 			<StyledContainer>
-				<MessagesList messages={this.state.messages}/>
+				<MessagesList messages={this.state.messages} messagesLoaded={this.state.messagesLoaded}/>
 				<SendMessage changeRoute={this.props.changeRoute} getMessages={this.getMessages} channelId={this.props.channelId} user={this.props.user}/>
 			</StyledContainer>
 			)
