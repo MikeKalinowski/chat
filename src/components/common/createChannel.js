@@ -30,9 +30,9 @@ class CreateChannel extends React.Component {
 		if (!this.state.newChannelName || !this.state.newChannelDescription) {
 			this.setState({ errorCreating: "Empty" });
 		} else {
-			fetch('https://chattychat777.herokuapp.com/createChannel', {
-				method: 'post',
-				headers: {'Content-Type': 'application/json'},
+			fetch("https://chattychat777.herokuapp.com/createChannel", {
+				method: "post",
+				headers: {"Content-Type": "application/json"},
 				body: JSON.stringify({
 				    newChannelName: this.state.newChannelName,
 				    newChannelDescription: this.state.newChannelDescription,
@@ -53,12 +53,15 @@ class CreateChannel extends React.Component {
 	}
 
 	setErrorMessage = () => {
-		if (this.state.errorCreating === "Existing") {
-			return (<div>Channel with that name already exists</div>)
-		} else if (this.state.errorCreating === "Error") {
-			return (<div>Error creating channel. Please try again later</div>)
-		} else if (this.state.errorCreating === "Empty") {
-			return (<div>Please enter channel name and description</div>)
+		switch (this.state.errorCreating) {
+		  	case "Existing":
+			    return (<div>Channel with that name already exists</div>);
+			case "Error":
+			    return (<div>Error creating channel. Please try again later</div>);
+			case "Empty":
+			    return (<div>Please enter channel name and description</div>);
+			default:
+				break;
 		}
 	}
 
@@ -83,9 +86,9 @@ class CreateChannel extends React.Component {
 			      				    error
 			      				    content={this.setErrorMessage()}
 			      				/>
-			      		  		<Form.Input label='Channel name' placeholder='Channel name' onChange={this.onChannelNameChange} />
-			      		  		<Form.Input label='Description' type='Description' onChange={this.onChannelDescriptionChange} />
-			      		  		<Button content='Create' primary onClick={this.createChannel} />
+			      		  		<Form.Input label="Channel name" placeholder="Channel name" onChange={this.onChannelNameChange} />
+			      		  		<Form.Input label="Description" type="Description" onChange={this.onChannelDescriptionChange} />
+			      		  		<Button content="Create" primary onClick={this.createChannel} />
 			      			</Form>
 				      	</Modal.Description>
 				    </Modal.Content>

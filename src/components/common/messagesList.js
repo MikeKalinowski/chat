@@ -25,7 +25,7 @@ class MessagesList extends React.Component {
 
 	// Scrolls to the bottom of chat window (newest message)
 	scrollToBottom = () => { 
-	  this.messagesEnd.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+	  this.messagesEnd.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
 	}
 
 	makeDatePretty = (date) => {
@@ -33,8 +33,8 @@ class MessagesList extends React.Component {
 		let hh = a.getHours();
 		let mm = a.getMinutes();
 		let ss = a.getSeconds();
-		(mm < 10) && (mm = '0' + mm);
-		(ss < 10) && (ss = '0' + ss);
+		(mm < 10) && (mm = "0" + mm);
+		(ss < 10) && (ss = "0" + ss);
 		let finalDate = hh + ":" + mm + ":" + ss;
 		return finalDate;
 	}
@@ -44,7 +44,7 @@ class MessagesList extends React.Component {
 			<Comment key={message.id}>
 			   	<Comment.Avatar src={"https://ui-avatars.com/api/?name=" + message.name + "&background=" + message.avatarColor + "&length=1&rounded=true"} />
 			   	<Comment.Content>
-			     	<Comment.Author as='a'>{message.name}</Comment.Author>
+			     	<Comment.Author as="a">{message.name}</Comment.Author>
 			     	<Comment.Metadata>
 			       		<div>{this.makeDatePretty(message.date)}</div>
 			     	</Comment.Metadata>

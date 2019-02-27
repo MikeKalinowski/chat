@@ -33,9 +33,9 @@ class Channel extends React.Component {
 	}
 
 	getMessages = () => {
-		fetch('https://chattychat777.herokuapp.com/messagesList', {
-			method: 'post',
-			headers: {'Content-Type': 'application/json'},
+		fetch("https://chattychat777.herokuapp.com/messagesList", {
+			method: "post",
+			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify({
 			    channelId: this.props.channelId
 			})
@@ -46,7 +46,7 @@ class Channel extends React.Component {
 
 	//Server Sent Events listener that gets messages when sb writes new one
 	setMessagesSSE = () => { 
-		const urlWithChannelId = 'https://chattychat777.herokuapp.com/messagesListSSE/' + this.props.channelId // Allows to send proper SSE messages from server
+		const urlWithChannelId = "https://chattychat777.herokuapp.com/messagesListSSE/" + this.props.channelId // Allows to send proper SSE messages from server
 		this.eventSource = new EventSource(urlWithChannelId);
 		this.eventSource.onmessage = (e) => {
 			this.setState({messages: JSON.parse(e.data)}); 

@@ -19,9 +19,9 @@ class SendMessage extends React.Component {
 	}
 
 	sendMessage = () => {
-		this.state.messageText && fetch('https://chattychat777.herokuapp.com/sendMessage', {
-			method: 'post',
-			headers: {'Content-Type': 'application/json'},
+		this.state.messageText && fetch("https://chattychat777.herokuapp.com/sendMessage", {
+			method: "post",
+			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify({
 			    content: this.state.messageText,
 			    userId: this.props.user.id,
@@ -42,7 +42,7 @@ class SendMessage extends React.Component {
 		return(
 			<Form reply>
 			    <Form.TextArea onChange={this.onMessageChange} onKeyDown={this.onKeyPress} placeholder="Message text" id="messageInput"/>
-			    <Button onClick={this.sendMessage} content='Send' labelPosition='left' icon='edit' primary />
+			    <Button onClick={this.sendMessage} content="Send" labelPosition="left" icon="edit" primary />
 			    <Button onClick={() => {this.props.changeRoute("main")}}>Back</Button>
 			</Form>
 		)

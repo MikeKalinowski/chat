@@ -31,7 +31,7 @@ class Main extends React.Component {
 	  	return(
 	  		<StyledContainer>
 	  			<Segment>
-	  				<Header as='h1' textAlign="center">Channels</Header>
+	  				<Header as="h1" textAlign="center">Channels</Header>
 	  				<ChannelsList refreshChannelState={this.state.refreshChannelState} changeRoute={this.props.changeRoute}/>
 	  			</Segment>
 	  			<CreateChannel refreshChannelList={this.refreshChannelList}/>

@@ -31,18 +31,21 @@ class App extends Component {
 
 	// Needed because heroku goes to sleep when idle. User will be able to do stuff faster
 	wakeServerUp = () => {
-		fetch('https://chattychat777.herokuapp.com/');
+		fetch("https://chattychat777.herokuapp.com/");
 	}
 
 	pickRoute = () => {
-		if (this.state.route === "register") {
-			return (<Register changeRoute={this.changeRoute} saveUserData={this.saveUserData}/>)
-		} else if (this.state.route === "main") {
-			return (<Main changeRoute={this.changeRoute} user={this.state.user}/>)
-		} else if (this.state.route === "login") {
-			return (<Login changeRoute={this.changeRoute} saveUserData={this.saveUserData}/>)
-		} else if (this.state.route === "channel") {
-			return (<Channel changeRoute={this.changeRoute} channelId={this.state.channelId} user={this.state.user}/>)
+		switch (this.state.route) {
+		  	case "register":
+			    return (<Register changeRoute={this.changeRoute} saveUserData={this.saveUserData}/>);
+			case "main":
+			    return (<Main changeRoute={this.changeRoute} user={this.state.user}/>);
+			case "login":
+			    return (<Login changeRoute={this.changeRoute} saveUserData={this.saveUserData}/>);
+			case "channel":
+			    return (<Channel changeRoute={this.changeRoute} channelId={this.state.channelId} user={this.state.user}/>);
+			default:
+				break;
 		}
 	}
 
