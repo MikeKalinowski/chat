@@ -32,7 +32,7 @@ class Main extends React.Component {
 	  		<StyledContainer>
 	  			<Segment>
 	  				<Header as="h1" textAlign="center">Channels</Header>
-	  				<ChannelsList refreshChannelState={this.state.refreshChannelState} changeRoute={this.props.changeRoute}/>
+	  				<ChannelsList refreshChannelState={this.state.refreshChannelState} changeRoute={this.props.changeRoute} passChannelData={this.props.passChannelData}/>
 	  			</Segment>
 	  			<CreateChannel refreshChannelList={this.refreshChannelList}/>
 	  		</StyledContainer>

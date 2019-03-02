@@ -21,6 +21,7 @@ class App extends Component {
 		this.state = {
 			route: "login",
 			channelId: 0,
+			channelName: "",
 			user: {}
 		}
 	}
@@ -39,24 +40,29 @@ class App extends Component {
 		  	case "register":
 			    return (<Register changeRoute={this.changeRoute} saveUserData={this.saveUserData}/>);
 			case "main":
-			    return (<Main changeRoute={this.changeRoute} user={this.state.user}/>);
+			    return (<Main changeRoute={this.changeRoute} passChannelData={this.passChannelData} user={this.state.user}/>);
 			case "login":
 			    return (<Login changeRoute={this.changeRoute} saveUserData={this.saveUserData}/>);
 			case "channel":
-			    return (<Channel changeRoute={this.changeRoute} channelId={this.state.channelId} user={this.state.user}/>);
+			    return (<Channel changeRoute={this.changeRoute} channelId={this.state.channelId} channelName={this.state.channelName} user={this.state.user}/>);
 			default:
 				break;
 		}
 	}
 
 	changeRoute = (newRoute, channelId) => {
-		channelId && this.setState({channelId: channelId}); // takes channelId of clicked channel from Main component to pass it to Channel
 		this.setState({route: newRoute});
 	}
 
 	// Saving data from db
 	saveUserData = (data) => {
 		this.setState({ user: data})
+	}
+
+	// takes channel Id and Name of clicked channel from Main component to pass it to Channel
+	passChannelData = (channelId, channelName) => {
+		this.setState({ channelName: channelName});
+		this.setState({ channelId: channelId});
 	}
 
   	render() {

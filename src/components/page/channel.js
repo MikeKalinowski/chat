@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import MessagesList from '../common/messagesList'
 import SendMessage from '../common/sendMessage'
 
-import { Container } from 'semantic-ui-react'
+import { Container, Header } from 'semantic-ui-react'
 
 
 const StyledContainer = styled(Container)`
@@ -11,6 +11,10 @@ const StyledContainer = styled(Container)`
 		margin-top: 60px;
 		max-width: 800px!important;
 	}
+`
+
+const StyledHeader = styled(Header)`
+	color: #666;
 `
 
 class Channel extends React.Component {
@@ -56,6 +60,7 @@ class Channel extends React.Component {
 	render() {
 		return(
 			<StyledContainer>
+				<StyledHeader as="h1">{this.props.channelName}</StyledHeader>
 				<MessagesList messages={this.state.messages} messagesLoaded={this.state.messagesLoaded}/>
 				<SendMessage changeRoute={this.props.changeRoute} getMessages={this.getMessages} channelId={this.props.channelId} user={this.props.user}/>
 			</StyledContainer>
